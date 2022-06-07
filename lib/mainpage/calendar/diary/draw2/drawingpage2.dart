@@ -1,12 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:untitled1/mainpage/calendar/diary/diarypage.dart';
 import 'package:untitled1/util/constants.dart';
-
-import '../../calendarpage.dart';
 
 class drawingpage extends StatefulWidget {
   const drawingpage({Key? key}) : super(key: key);
@@ -16,8 +11,10 @@ class drawingpage extends StatefulWidget {
 }
 
 class _drawingpageState extends State<drawingpage> {
+
   final DrawingController _drawingController = DrawingController();
 
+  //그림을 그린 이미지 값 변환 함수
   void _getImageData() async {
     final Uint8List? data = (await _drawingController.getImageData())?.buffer.asUint8List();
     final String dataSt = new String.fromCharCodes(data!);
@@ -37,7 +34,6 @@ class _drawingpageState extends State<drawingpage> {
                 )
               ],
             )
-
     );
   }
 
@@ -51,6 +47,7 @@ class _drawingpageState extends State<drawingpage> {
         centerTitle: true,
         backgroundColor: kPrimaryColor,
         actions: <Widget>[
+          //체크 아이콘 누르면 _getImageData 함수 실행
           IconButton(
               icon: const Icon(Icons.check),
               onPressed: () {
@@ -61,7 +58,7 @@ class _drawingpageState extends State<drawingpage> {
       body: Column(
         children: [
           Expanded(
-              child: DrawingBoard(// 드로잉 보드 패키지
+              child: DrawingBoard(// 드로잉 보드
                 controller: _drawingController,
                 background:
                 Container(width: 400, height: 400, color: Colors.orange[50]),

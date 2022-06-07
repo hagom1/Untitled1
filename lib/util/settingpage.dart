@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/util/constants.dart';
 import '../main.dart';
 
+
+//설정 페이지
 class settingpage extends StatefulWidget {
   const settingpage({Key? key}) : super(key: key);
 

@@ -106,6 +106,7 @@ class _calendarpageState extends State<calendarpage> {
                   shrinkWrap: true,
                   itemCount: diarytitle.length,
                   itemBuilder: (BuildContext context,int index){
+                    //작성된 일기 메인 페이지에 표시
                     return Card(
                       color: kPrimaryColor,
                       elevation: 5,
@@ -167,19 +168,17 @@ class _calendarpageState extends State<calendarpage> {
           ),
         ),
       ),
-
+  // 작성 버튼
       floatingActionButton: FloatingActionButton.extended(
       onPressed: () async {
         final value = await Get.to(() => diarypage());
         setState((){
-          // diaryimg2 = value[0];
           diarytitle2 = value[1];
           diarytext2 = value[2];
           imgdata3=value[0];
         });
         addDiaryToList();
         if(value != null) {
-          // print(diaryimg2);
           print(diarytitle2);
           print(diarytext2);
         }

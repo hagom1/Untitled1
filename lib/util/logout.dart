@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/login/loginpage.dart';
 
+//로그아웃 함수
 void logout(BuildContext context) {
   showDialog(
     barrierDismissible: false,

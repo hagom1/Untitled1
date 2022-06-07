@@ -2,9 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:untitled1/mainpage/calendar/calendarpage.dart';
 import 'package:untitled1/util/constants.dart';
-import '../calendarpage.dart';
 import 'draw2/drawingpage2.dart';
 
 class diarypage extends StatefulWidget {
@@ -23,7 +21,7 @@ class _diarypageState extends State<diarypage> {
   TextEditingController diarytitle = TextEditingController();
   TextEditingController diarytext = TextEditingController();
 
-
+//Uint8List 를 String으로 변환
   Uint8List convertStringToUint8List(String str) {
     final List<int> codeUnits = str.codeUnits;
     final Uint8List unit8List = Uint8List.fromList(codeUnits);
@@ -32,7 +30,7 @@ class _diarypageState extends State<diarypage> {
 
   String _pickerDate='달력 아이콘을 눌러주세요.';
 
-
+//날짜 선택
   Future<void> _openDatePicker(BuildContext context) async{
     final DateTime? d = await showDatePicker(context: context,
         initialDate: DateTime.now(),
@@ -46,10 +44,12 @@ class _diarypageState extends State<diarypage> {
   }
 
   late String imgdata2;
+
   void initState(){
     imgdata2='';
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     Uint8List imgdata8list = convertStringToUint8List(imgdata2);
@@ -57,7 +57,6 @@ class _diarypageState extends State<diarypage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-
             SizedBox(height: 25,),
                Row(
                  mainAxisAlignment: MainAxisAlignment.center,
@@ -161,11 +160,6 @@ class _diarypageState extends State<diarypage> {
       floatingActionButton: FloatingActionButton.extended(
       onPressed: () {
         Get.back(result: [imgdata2,diarytitle.text,diarytext.text]);
-        // Get.back(result: imgdataSt);
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => calendarpage(imgdata2: '${widget.imgdata}',)),
-        // );
       },
       label: const Text('완료'),
       icon: const Icon(Icons.check),

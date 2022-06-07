@@ -18,7 +18,7 @@ class _MAKEIDState extends State<MAKEID> {
   var _makepwcheckTEC = TextEditingController();
   var _makenameTEC = TextEditingController();
 
-
+//회원가입 페이지
   @override
   Widget build(BuildContext context) {
     return Scaffold(

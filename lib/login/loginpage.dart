@@ -31,15 +31,16 @@ class _loginpageState extends State<loginpage> {
                 "Login",
                 style: TextStyle(fontSize: 24),
               ),
-              IDtf(tec: _idTEC), //id 입력 컴포넌트
-              PWtf(tec: _pwTEC), // pw 입력 컴포넌트
+              IDtf(tec: _idTEC), //id 입력 텍스트 컨트롤러
+              PWtf(tec: _pwTEC), // pw 입력 텍스트 컨트롤러
               //로그인 버튼
               Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 123),
+                    //로그인 버튼
                     child: ElevatedButton(
-                      onPressed: () { // 달력있는 메인 페이지로 이동
+                      onPressed: () { // 메인 페이지로 이동
                         Get.off(calendarpage());
                       },
                       child: Text("Login"),
@@ -53,6 +54,7 @@ class _loginpageState extends State<loginpage> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 35),
+                    //회원가입 버튼
                     child: TextButton(
                       onPressed: (){
                         Navigator.push(
@@ -64,7 +66,6 @@ class _loginpageState extends State<loginpage> {
                       style: ElevatedButton.styleFrom(
                         onPrimary: Colors.black,
                       ),
-
                     ),
                   ),
                 ],
