@@ -26,9 +26,11 @@ class _calendarpageState extends State<calendarpage> {
   final List<String?> diarytitle = <String>[];
   final List<String?> diarytext = <String>[];
   final List<String> diaryimg =<String>[];
+  final List<String> diarydate=<String>[];
 
   late String? diarytitle2;
   late String? diarytext2;
+  late String? diarydate2;
   late String imgdata3;
   void initState(){
     imgdata3='';
@@ -39,6 +41,7 @@ class _calendarpageState extends State<calendarpage> {
       diarytitle.insert(0,diarytitle2);
       diarytext.insert(0,diarytext2);
       diaryimg.insert(0,imgdata3);
+      diarydate.insert(0, diarydate2!);
     });
   }
 
@@ -115,7 +118,7 @@ class _calendarpageState extends State<calendarpage> {
                         onTap: (){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => viewdiarypage(viewtitle: diarytitle[index],viewtext: diarytext[index],)),
+                            MaterialPageRoute(builder: (context) => viewdiarypage(viewtitle: diarytitle[index],viewtext: diarytext[index],viewdate: diarydate[index],)),
                           );
                         },
                         child:SingleChildScrollView (
@@ -148,7 +151,7 @@ class _calendarpageState extends State<calendarpage> {
                                   margin: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 20.0),
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    diarytext[index]!,
+                                    diarydate[index]!,
                                     style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
@@ -176,6 +179,7 @@ class _calendarpageState extends State<calendarpage> {
           diarytitle2 = value[1];
           diarytext2 = value[2];
           imgdata3=value[0];
+          diarydate2=value[3];
         });
         addDiaryToList();
         if(value != null) {

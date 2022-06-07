@@ -159,7 +159,7 @@ class _diarypageState extends State<diarypage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
       onPressed: () {
-        Get.back(result: [imgdata2,diarytitle.text,diarytext.text]);
+        Get.back(result: [imgdata2,diarytitle.text,diarytext.text,_pickerDate]);
       },
       label: const Text('완료'),
       icon: const Icon(Icons.check),
