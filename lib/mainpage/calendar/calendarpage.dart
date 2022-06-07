@@ -4,21 +4,14 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:untitled1/login/loginpage.dart';
 import 'package:untitled1/mainpage/calendar/diary/diarypage.dart';
+import 'package:untitled1/mainpage/calendar/diary/viewdiarypage.dart';
 import 'package:untitled1/util/logout.dart';
 import 'package:untitled1/util/settingpage.dart';
-
-import 'event.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 import '../../util/constants.dart';
-import 'diary/draw2/drawingpage2.dart';
 
 class calendarpage extends StatefulWidget {
-  const calendarpage({Key? key,this.imgdata,this.diarytt,this.diarytxt}) : super(key: key);
-  final String? imgdata;
-  final String? diarytt;
-  final String? diarytxt;
-
+  const calendarpage({Key? key}) : super(key: key);
   @override
   State<calendarpage> createState() => _calendarpageState();
 }
@@ -32,15 +25,18 @@ class _calendarpageState extends State<calendarpage> {
     return unit8List;
   }
 
-  final List<String> diarytitle = <String>[];
-  final List<String> diarytext = <String>[];
+  final List<String?> diarytitle = <String>[];
+  final List<String?> diarytext = <String>[];
   // final List<String> diaryimg =<String>[];
 
-  late String diarytitle2;
-  late String diarytext2;
-  // late String diaryimg2;
-
-
+  late String? diarytitle2;
+  late String? diarytext2;
+  // late String? diaryimg2;
+  late String imgdata3;
+  void initState(){
+    imgdata3='';
+    super.initState();
+  }
   void addDiaryToList(){
     setState(() {
       diarytitle.insert(0,diarytitle2);
@@ -51,7 +47,7 @@ class _calendarpageState extends State<calendarpage> {
 
   @override
   Widget build(BuildContext context) {
-    // Uint8List imgdata8list = convertStringToUint8List(diaryimg2);
+    Uint8List imgdata8list = convertStringToUint8List(imgdata3);
     return Scaffold(
       drawer: Drawer(
         // 메뉴바
@@ -110,24 +106,41 @@ class _calendarpageState extends State<calendarpage> {
       ),
       body: Container(
         child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: diarytitle.length,
-                itemBuilder: (BuildContext context,int index){
-                  return ListTile(
-                    title: Text(diarytitle[index]),
-                    subtitle: Text(diarytext[index]),
-                    // leading: Image.memory(imgdata8list,fit: BoxFit.fill,),
-                  );
-                },
-              )
-            )],
+          child: Column(
+            children: [
+              Container(
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: diarytitle.length,
+                    itemBuilder: (BuildContext context,int index){
+                      return Card(
+                        elevation: 5,
+                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        child: ListTile(
+                          title: Text(diarytitle[index]!,style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18
+                          ),),
+                          subtitle: Text(diarytext[index]!),
+                          leading: Image.memory(
+                              imgdata8list,
+                            fit: BoxFit.fill,
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => viewdiarypage(viewtitle: diarytitle[index],
+                              viewtext: diarytext[index],)),
+                            );
+                            },
+                        ),
+                      );
+                    },
+                  )
+              )],
+          ),
         ),
-      ),
       ),
       floatingActionButton: FloatingActionButton.extended(
       onPressed: () async {
@@ -136,10 +149,13 @@ class _calendarpageState extends State<calendarpage> {
           // diaryimg2 = value[0];
           diarytitle2 = value[1];
           diarytext2 = value[2];
+          imgdata3=value[0];
         });
-        // print(diaryimg2);
-        print(diarytitle2);
-        print(diarytext2);
+        if(value != null) {
+          // print(diaryimg2);
+          print(diarytitle2);
+          print(diarytext2);
+        }
       },
       label: const Text('작성'),
       icon: const Icon(Icons.create),

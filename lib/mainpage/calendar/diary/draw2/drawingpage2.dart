@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:untitled1/mainpage/calendar/diary/diarypage.dart';
 import 'package:untitled1/util/constants.dart';
 
@@ -28,14 +30,9 @@ class _drawingpageState extends State<drawingpage> {
               actions: [
                 TextButton(
                   child: Text('예'),
-                  onPressed: () async{
+                  onPressed: () {
                     Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => diarypage(imgdata: dataSt,)),
-                    );
+                    Navigator.pop(context,dataSt);
 
                   },
                 )

@@ -8,8 +8,11 @@ import '../calendarpage.dart';
 import 'draw2/drawingpage2.dart';
 
 class diarypage extends StatefulWidget {
-  const diarypage({Key? key,this.imgdata}) : super(key: key);
+  const diarypage({Key? key,this.imgdata,this.edittitle,this.edittext}) : super(key: key);
   final String? imgdata;
+  final String? edittitle;
+  final String? edittext;
+
 
   @override
   State<diarypage> createState() => _diarypageState();
@@ -20,6 +23,7 @@ class _diarypageState extends State<diarypage> {
   TextEditingController diarytitle = TextEditingController();
   TextEditingController diarytext = TextEditingController();
 
+
   Uint8List convertStringToUint8List(String str) {
     final List<int> codeUnits = str.codeUnits;
     final Uint8List unit8List = Uint8List.fromList(codeUnits);
@@ -27,6 +31,7 @@ class _diarypageState extends State<diarypage> {
   }
 
   String _pickerDate='달력 아이콘을 눌러주세요.';
+
 
   Future<void> _openDatePicker(BuildContext context) async{
     final DateTime? d = await showDatePicker(context: context,
@@ -40,9 +45,14 @@ class _diarypageState extends State<diarypage> {
     }
   }
 
+  late String imgdata2;
+  void initState(){
+    imgdata2='';
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    Uint8List imgdata8list = convertStringToUint8List('${widget.imgdata}');
+    Uint8List imgdata8list = convertStringToUint8List(imgdata2);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -71,7 +81,7 @@ class _diarypageState extends State<diarypage> {
             Padding(
               padding: EdgeInsets.only(left: 20,right: 20),
               child: TextField(
-                controller: diarytitle,
+                controller: diarytitle..text='${widget.edittitle}',
                 decoration: InputDecoration(
                   labelText: '제목',
                   labelStyle: TextStyle(
@@ -102,11 +112,16 @@ class _diarypageState extends State<diarypage> {
             Padding(
               padding: EdgeInsets.only(top: 2),
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => drawingpage()),
-                  );
+                onPressed: () async{
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => drawingpage()),
+                  // );
+                  final valueimg = await Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>drawingpage()));
+                  setState((){
+                    imgdata2 = valueimg;
+                  });
                 },
                 child: Text('그림 그리기'),
                 style: ElevatedButton.styleFrom(
@@ -119,8 +134,8 @@ class _diarypageState extends State<diarypage> {
             ),
             Padding(
                 padding: EdgeInsets.only(left: 20,right: 20,bottom: 20),
-                child: TextField(
-                  controller: diarytext,
+                child: TextFormField(
+                  controller: diarytext..text='${widget.edittext}',
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: '일기',
@@ -148,13 +163,12 @@ class _diarypageState extends State<diarypage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
       onPressed: () {
+        Get.back(result: [imgdata2,diarytitle.text,diarytext.text]);
+        // Get.back(result: imgdataSt);
         // Navigator.push(
         //   context,
-        //   MaterialPageRoute(builder: (context) => calendarpage(imgdata: '${widget.imgdata}',
-        //   diarytt: diarytitle.text,
-        //   diarytxt: diarytext.text,)),
+        //   MaterialPageRoute(builder: (context) => calendarpage(imgdata2: '${widget.imgdata}',)),
         // );
-        Get.back(result: [widget.imgdata,diarytitle.text,diarytext.text]);
       },
       label: const Text('완료'),
       icon: const Icon(Icons.check),
