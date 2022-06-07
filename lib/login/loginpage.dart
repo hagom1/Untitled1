@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:untitled1/mainpage/calendar/calendarpage.dart';
-import 'package:untitled1/mainpage/calendar/diary/draw/drawmain.dart';
 import 'package:untitled1/mainpage/calendar/diary/draw2/drawingpage2.dart';
 import 'package:untitled1/makeid/makeidpage.dart';
 import '../login/loginid.dart';
 import '../login/loginpw.dart';
 
+//로그인 페이지
 class loginpage extends StatefulWidget {
   @override
   State<loginpage> createState() => _loginpageState();
@@ -37,12 +39,8 @@ class _loginpageState extends State<loginpage> {
                   Padding(
                     padding: EdgeInsets.only(left: 123),
                     child: ElevatedButton(
-                      onPressed: () {
-                        print(_idTEC.text + " " + _pwTEC.text);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => calendarpage()),
-                        );
+                      onPressed: () { // 달력있는 메인 페이지로 이동
+                        Get.off(calendarpage());
                       },
                       child: Text("Login"),
                       style: ElevatedButton.styleFrom(

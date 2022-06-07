@@ -1,5 +1,7 @@
 
 import 'dart:typed_data';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:untitled1/login/loginpage.dart';
 import 'package:untitled1/mainpage/calendar/diary/diarypage.dart';
 import 'package:untitled1/util/logout.dart';
@@ -12,36 +14,17 @@ import '../../util/constants.dart';
 import 'diary/draw2/drawingpage2.dart';
 
 class calendarpage extends StatefulWidget {
-  const calendarpage({Key? key,this.imgdata}) : super(key: key);
+  const calendarpage({Key? key,this.imgdata,this.diarytt,this.diarytxt}) : super(key: key);
   final String? imgdata;
+  final String? diarytt;
+  final String? diarytxt;
 
   @override
   State<calendarpage> createState() => _calendarpageState();
 }
 
 class _calendarpageState extends State<calendarpage> {
-  late Map<DateTime,List<Event>> selectedEvents;
-  DateTime selectedDay = DateTime.now();
-  DateTime focusedDay = DateTime.now();
-  TextEditingController diarytitle = TextEditingController();
-  TextEditingController diarytext = TextEditingController();
 
-  @override
-  void initState() {
-    selectedEvents = {};
-    super.initState();
-  }
-
-  List<Event> calendarEvents(DateTime date) {
-    return selectedEvents[date] ?? [];
-  }
-
-  @override
-  void dispose(){
-    diarytext.dispose();
-    diarytitle.dispose();
-    super.dispose();
-  }
 
   Uint8List convertStringToUint8List(String str) {
     final List<int> codeUnits = str.codeUnits;
@@ -49,14 +32,30 @@ class _calendarpageState extends State<calendarpage> {
     return unit8List;
   }
 
+  final List<String> diarytitle = <String>[];
+  final List<String> diarytext = <String>[];
+  // final List<String> diaryimg =<String>[];
+
+  late String diarytitle2;
+  late String diarytext2;
+  // late String diaryimg2;
+
+
+  void addDiaryToList(){
+    setState(() {
+      diarytitle.insert(0,diarytitle2);
+      diarytext.insert(0,diarytext2);
+      // diaryimg.insert(0,diaryimg2);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Uint8List imgdata8list = convertStringToUint8List('${widget.imgdata}');
-    var _image = MemoryImage(imgdata8list);
+    // Uint8List imgdata8list = convertStringToUint8List(diaryimg2);
     return Scaffold(
       drawer: Drawer(
         // 메뉴바
-        backgroundColor: Colors.indigo[200],
+        backgroundColor: Colors.indigo[100],
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -64,7 +63,7 @@ class _calendarpageState extends State<calendarpage> {
                 child: Text('메뉴',style: TextStyle(fontWeight: FontWeight.bold,
                 fontSize: 30)),
               decoration: BoxDecoration(
-                color: Colors.indigo[400],
+                color: Colors.indigo[300],
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(20)
                 )
@@ -102,141 +101,45 @@ class _calendarpageState extends State<calendarpage> {
         title: Text('일기장'),
         centerTitle: true,
         actions: <Widget>[
-          IconButton( // 달력 이벤트
-              icon: const Icon(Icons.autorenew),
+          IconButton(
+              icon: const Icon(Icons.check),
               onPressed: () {
-
-              }
-              )
+                addDiaryToList();
+              })
         ],
       ),
       body: Container(
         child: SingleChildScrollView(
         child: Column(
           children: [
-            // SizedBox(height: 20,),
-            TableCalendar(
-              daysOfWeekHeight: 30,
-              focusedDay: focusedDay,
-              firstDay: DateTime(2020),
-              lastDay: DateTime(2050),
-              headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-                titleTextStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17
-                )
-                ),
-              calendarBuilders: CalendarBuilders(
-                dowBuilder: (context, day) {
-                  switch(day.weekday){
-                    case 1:
-                      return Center(child: Text('월',
-                      style: TextStyle(fontSize: 17,
-                        fontWeight: FontWeight.bold
-                      ),),);
-                    case 2:
-                      return Center(child: Text('화',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),),);
-                    case 3:
-                      return Center(child: Text('수',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),),);
-                    case 4:
-                      return Center(child: Text('목',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),),);
-                    case 5:
-                      return Center(child: Text('금',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),),);
-                    case 6:
-                      return Center(
-                          child: Text('토',
-                            style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          )
-                      );
-                    case 7:
-                      return Center(child: Text('일',
-                        style: TextStyle(
-                            fontSize: 17,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      );
-                  }
-                },
-              ),
-              onDaySelected: (DateTime selectDay, DateTime focusDay) {
-                setState(() {
-                  selectedDay = selectDay;
-                  focusedDay = focusDay;
-                });
-                print(focusedDay);
-              },
-              //날짜 선택 모션
-              selectedDayPredicate: (DateTime date) {
-                return isSameDay(selectedDay, date);
-              },
-              daysOfWeekStyle: DaysOfWeekStyle(
-                weekdayStyle: TextStyle(
-                  fontWeight: FontWeight.bold
-                )
-              ),
-              eventLoader: calendarEvents,
-              ),
-            ...calendarEvents(selectedDay).map((Event event) => ListTile(title: Text(event.title),)),
-            SizedBox(height: 5),
             Container(
-              child: Row(
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.all(15.0),
-              //       child: Image.memory(
-              //         imgdata8list,
-              //         width: 150,
-              //         height: 150,
-              //       ),
-              //     ),
-              //     Text('data')
-              //   ],
-              // ),
-
-              // padding: EdgeInsets.only(left: 30),
-              // width: MediaQuery.of(context).size.width,
-              // height: MediaQuery.of(context).size.height*0.55,
-              // decoration: BoxDecoration(
-              //   color: kPrimaryColor,
-              //   borderRadius: BorderRadius.only(
-              //     topLeft: Radius.circular(20),
-              //     topRight: Radius.circular(20)
-              //   )
-              // ),
-            ),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: diarytitle.length,
+                itemBuilder: (BuildContext context,int index){
+                  return ListTile(
+                    title: Text(diarytitle[index]),
+                    subtitle: Text(diarytext[index]),
+                    // leading: Image.memory(imgdata8list,fit: BoxFit.fill,),
+                  );
+                },
+              )
             )],
         ),
       ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => diarypage()),
-        );
+      onPressed: () async {
+        final value = await Get.to(() => diarypage());
+        setState((){
+          // diaryimg2 = value[0];
+          diarytitle2 = value[1];
+          diarytext2 = value[2];
+        });
+        // print(diaryimg2);
+        print(diarytitle2);
+        print(diarytext2);
       },
       label: const Text('작성'),
       icon: const Icon(Icons.create),

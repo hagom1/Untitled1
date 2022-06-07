@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:untitled1/mainpage/calendar/diary/diarypage.dart';
 import 'package:untitled1/util/constants.dart';
+
 import '../../calendarpage.dart';
 
 class drawingpage extends StatefulWidget {
@@ -28,8 +29,6 @@ class _drawingpageState extends State<drawingpage> {
                 TextButton(
                   child: Text('예'),
                   onPressed: () async{
-                    print(data);
-                    print(dataSt);
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();

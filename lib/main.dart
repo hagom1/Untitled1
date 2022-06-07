@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import '../login/loginpage.dart';
 
 void main() {
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder<ThemeMode>(
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __){
-          return MaterialApp(
+          return GetMaterialApp(
             title: '설정',
             debugShowCheckedModeBanner: false,
             darkTheme: ThemeData.dark(),

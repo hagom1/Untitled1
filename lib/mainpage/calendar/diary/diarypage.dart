@@ -1,11 +1,11 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:untitled1/mainpage/calendar/calendarpage.dart';
 import 'package:untitled1/util/constants.dart';
-
+import '../calendarpage.dart';
 import 'draw2/drawingpage2.dart';
-
 
 class diarypage extends StatefulWidget {
   const diarypage({Key? key,this.imgdata}) : super(key: key);
@@ -17,10 +17,27 @@ class diarypage extends StatefulWidget {
 
 class _diarypageState extends State<diarypage> {
 
+  TextEditingController diarytitle = TextEditingController();
+  TextEditingController diarytext = TextEditingController();
+
   Uint8List convertStringToUint8List(String str) {
     final List<int> codeUnits = str.codeUnits;
     final Uint8List unit8List = Uint8List.fromList(codeUnits);
     return unit8List;
+  }
+
+  String _pickerDate='달력 아이콘을 눌러주세요.';
+
+  Future<void> _openDatePicker(BuildContext context) async{
+    final DateTime? d = await showDatePicker(context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2025));
+    if(d != null){
+      setState((){
+        _pickerDate = "${d.year.toString()}년 ${d.month.toString()}월 ${d.day.toString()}일";
+      });
+    }
   }
 
   @override
@@ -30,9 +47,31 @@ class _diarypageState extends State<diarypage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: 25,),
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   Text(
+                    _pickerDate,
+                     style: TextStyle(
+                       fontWeight: FontWeight.bold,
+                       fontSize: 18,
+                       color: kPrimaryColor
+                     ),
+              ),
+                   IconButton(
+                     icon: Icon(Icons.calendar_today_outlined,
+                         color: kPrimaryColor),
+                     onPressed: (){
+                       _openDatePicker(context);
+                     },
+                   ),
+                 ],
+               ),
             Padding(
-              padding: EdgeInsets.only(top: 50,left: 20,right: 20),
+              padding: EdgeInsets.only(left: 20,right: 20),
               child: TextField(
+                controller: diarytitle,
                 decoration: InputDecoration(
                   labelText: '제목',
                   labelStyle: TextStyle(
@@ -81,6 +120,7 @@ class _diarypageState extends State<diarypage> {
             Padding(
                 padding: EdgeInsets.only(left: 20,right: 20,bottom: 20),
                 child: TextField(
+                  controller: diarytext,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: '일기',
@@ -97,7 +137,7 @@ class _diarypageState extends State<diarypage> {
                       borderSide: BorderSide(color: kPrimaryColor)
                     )
                   ),
-                  maxLines: 18,
+                  maxLines: 13,
                   onTap: (){
 
                   },
@@ -108,11 +148,13 @@ class _diarypageState extends State<diarypage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
       onPressed: () {
-        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => calendarpage()),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => calendarpage(imgdata: '${widget.imgdata}',
+        //   diarytt: diarytitle.text,
+        //   diarytxt: diarytext.text,)),
+        // );
+        Get.back(result: [widget.imgdata,diarytitle.text,diarytext.text]);
       },
       label: const Text('완료'),
       icon: const Icon(Icons.check),
@@ -120,4 +162,5 @@ class _diarypageState extends State<diarypage> {
     ),
     );
   }
+
 }

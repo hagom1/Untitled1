@@ -27,6 +27,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  get: ^4.6.5
+  flutter_datetime_picker: ^1.5.1
   flutter_keyboard_size: ^1.0.0+4
   image_painter: ^0.4.5
   image_cropper: ^2.0.3
