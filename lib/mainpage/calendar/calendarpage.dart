@@ -118,7 +118,7 @@ class _calendarpageState extends State<calendarpage> {
                         onTap: (){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => viewdiarypage(viewtitle: diarytitle[index],viewtext: diarytext[index],viewdate: diarydate[index],)),
+                            MaterialPageRoute(builder: (context) => viewdiarypage(viewtitle: diarytitle[index],viewtext: diarytext[index],viewdate: diarydate[index],viewimg: imgdata3,)),
                           );
                         },
                         child:SingleChildScrollView (
@@ -189,7 +189,7 @@ class _calendarpageState extends State<calendarpage> {
       },
       label: const Text('작성'),
       icon: const Icon(Icons.create),
-      backgroundColor: Colors.deepPurple[800],
+      backgroundColor: kPrimaryColor,
     ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );

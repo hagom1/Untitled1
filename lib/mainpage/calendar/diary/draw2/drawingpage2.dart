@@ -18,6 +18,7 @@ class _drawingpageState extends State<drawingpage> {
   void _getImageData() async {
     final Uint8List? data = (await _drawingController.getImageData())?.buffer.asUint8List();
     final String dataSt = new String.fromCharCodes(data!);
+    print(data);
 
     showDialog<void>(
         context: context,
