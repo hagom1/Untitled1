@@ -16,6 +16,7 @@ class _viewdiarypageState extends State<viewdiarypage> {
     return Scaffold(
       body: Column(
         children: [
+          SizedBox(height: 100,),
           Text('${widget.viewtitle}'),
           Text('${widget.viewtext}')
         ],

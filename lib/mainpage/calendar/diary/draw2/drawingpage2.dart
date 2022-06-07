@@ -31,9 +31,8 @@ class _drawingpageState extends State<drawingpage> {
                 TextButton(
                   child: Text('예'),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.pop(context);
                     Navigator.pop(context,dataSt);
-
                   },
                 )
               ],

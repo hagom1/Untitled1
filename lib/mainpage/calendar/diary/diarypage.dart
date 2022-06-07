@@ -57,6 +57,7 @@ class _diarypageState extends State<diarypage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+
             SizedBox(height: 25,),
                Row(
                  mainAxisAlignment: MainAxisAlignment.center,
@@ -113,10 +114,6 @@ class _diarypageState extends State<diarypage> {
               padding: EdgeInsets.only(top: 2),
               child: ElevatedButton(
                 onPressed: () async{
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => drawingpage()),
-                  // );
                   final valueimg = await Navigator.push(context,
                   MaterialPageRoute(builder: (context)=>drawingpage()));
                   setState((){
