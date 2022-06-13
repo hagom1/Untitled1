@@ -21,42 +21,54 @@ class _MAKEIDState extends State<MAKEID> {
 //회원가입 페이지
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(50, 150, 60, 100),
-        child: Column(
-          children: [
-            Text('회원가입',
-                style: TextStyle(fontSize: 25)),
-            MAKEIDtf(tec: _makeidTEC),
-            MAKEPWtf(tec: _makepasswordTEC),
-            MAKEPWCHKtf(tec: _makepwcheckTEC),
-            MAKENNtf(tec: _makenameTEC),
-            Row(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage("assets/IMG_0010.jpg")
+            )
+        ),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: const EdgeInsets.fromLTRB(50, 150, 60, 100),
+            child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left:125,top: 10),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // postdata(User(_makeidTEC.text, _makepasswordTEC.text, _makenameTEC.text));
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context)=>loginpage())
-                      );
-                    },
-                    child: Text('가입'),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                Text('회원가입',
+                    style: TextStyle(fontSize: 25)),
+                MAKEIDtf(tec: _makeidTEC),
+                MAKEPWtf(tec: _makepasswordTEC),
+                MAKEPWCHKtf(tec: _makepwcheckTEC),
+                MAKENNtf(tec: _makenameTEC),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left:125,top: 10),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // postdata(User(_makeidTEC.text, _makepasswordTEC.text, _makenameTEC.text));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context)=>loginpage())
+                          );
+                        },
+                        child: Text('가입'),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          primary: Colors.deepPurple[400],
+                        ),
                       ),
-                      primary: Colors.deepPurple[400],
-                    ),
-                  ),
+                    )
+                  ],
                 )
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

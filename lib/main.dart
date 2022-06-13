@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __){
           return GetMaterialApp(
-            title: '설정',
+            title: '오예',
             debugShowCheckedModeBanner: false,
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,

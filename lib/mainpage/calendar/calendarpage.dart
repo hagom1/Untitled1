@@ -48,150 +48,161 @@ class _calendarpageState extends State<calendarpage> {
   @override
   Widget build(BuildContext context) {
     Uint8List imgdata8list = convertStringToUint8List(imgdata3);
-    return Scaffold(
-      drawer: Drawer(
-        // 메뉴바
-        backgroundColor: Colors.indigo[100],
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-                child: Text('메뉴',style: TextStyle(fontWeight: FontWeight.bold,
-                fontSize: 30)),
-              decoration: BoxDecoration(
-                color: Colors.indigo[300],
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(20)
-                )
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: Colors.deepPurple[900],
-              ),
-              title: Text('설정'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => settingpage()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.power_settings_new,
-                color: Colors.deepPurple[900],
-              ),
-              title: Text('로그아웃'),
-              onTap: () {
-                logout(context);
-              },
-            ),
-          ],
+    return MaterialApp(
+      home: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage("assets/IMG_0010.jpg")
+            )
         ),
-      ),
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        elevation: 10,
-        title: Text('일기장'),
-        centerTitle: true,
-      ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              Container(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: diarytitle.length,
-                  itemBuilder: (BuildContext context,int index){
-                    //작성된 일기 메인 페이지에 표시
-                    return Card(
-                      color: kPrimaryColor,
-                      elevation: 5,
-                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => viewdiarypage(viewtitle: diarytitle[index],viewtext: diarytext[index],viewdate: diarydate[index],viewimg: imgdata3,)),
-                          );
-                        },
-                        child:SingleChildScrollView (
-                          scrollDirection: Axis.horizontal,
-                          child:Row(
-                          children: [
-                            Image.memory(
-                              imgdata8list,
-                              width: 150,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 20,
-                                  width: 180,
-                                  margin: const EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 20.0),
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    diarytitle[index]!,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 180,
-                                  margin: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 20.0),
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    diarydate[index]!,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),)
-                      ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          drawer: Drawer(
+            // 메뉴바
+            backgroundColor: Colors.indigo[100],
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  child: Text('메뉴',style: TextStyle(fontWeight: FontWeight.bold,
+                      fontSize: 30)),
+                  decoration: BoxDecoration(
+                      color: Colors.indigo[300],
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(20)
+                      )
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.settings,
+                    color: Colors.deepPurple[900],
+                  ),
+                  title: Text('설정'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => settingpage()),
                     );
                   },
                 ),
-              )
-            ],
+                ListTile(
+                  leading: Icon(
+                    Icons.power_settings_new,
+                    color: Colors.deepPurple[900],
+                  ),
+                  title: Text('로그아웃'),
+                  onTap: () {
+                    logout(context);
+                  },
+                ),
+              ],
+            ),
           ),
+          appBar: AppBar(
+            backgroundColor: kPrimaryColor,
+            elevation: 10,
+            title: Text('일기장'),
+            centerTitle: true,
+          ),
+          body: Container(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Container(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: diarytitle.length,
+                      itemBuilder: (BuildContext context,int index){
+                        //작성된 일기 메인 페이지에 표시
+                        return Card(
+                          color: kPrimaryColor,
+                          elevation: 5,
+                          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => viewdiarypage(viewtitle: diarytitle[index],viewtext: diarytext[index],viewdate: diarydate[index],viewimg: diaryimg[index],)),
+                                );
+                              },
+                              child:SingleChildScrollView (
+                                scrollDirection: Axis.horizontal,
+                                child:Row(
+                                  children: [
+                                    Image.memory(
+                                      imgdata8list,
+                                      width: 150,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 20,
+                                          width: 180,
+                                          margin: const EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 20.0),
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            diarytitle[index]!,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 180,
+                                          margin: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 20.0),
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            diarydate[index]!,
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),)
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          // 작성 버튼
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () async {
+              final value = await Get.to(() => diarypage());
+              setState((){
+                diarytitle2 = value[1];
+                diarytext2 = value[2];
+                imgdata3=value[0];
+                diarydate2=value[3];
+              });
+              addDiaryToList();
+              if(value != null) {
+                print(diarytitle2);
+                print(diarytext2);
+              }
+            },
+            label: const Text('작성'),
+            icon: const Icon(Icons.create),
+            backgroundColor: Colors.deepPurple[800],
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         ),
       ),
-  // 작성 버튼
-      floatingActionButton: FloatingActionButton.extended(
-      onPressed: () async {
-        final value = await Get.to(() => diarypage());
-        setState((){
-          diarytitle2 = value[1];
-          diarytext2 = value[2];
-          imgdata3=value[0];
-          diarydate2=value[3];
-        });
-        addDiaryToList();
-        if(value != null) {
-          print(diarytitle2);
-          print(diarytext2);
-        }
-      },
-      label: const Text('작성'),
-      icon: const Icon(Icons.create),
-      backgroundColor: kPrimaryColor,
-    ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      );
+    );
   }
 }
